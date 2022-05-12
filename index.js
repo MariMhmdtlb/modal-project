@@ -1,24 +1,32 @@
-const showModalBtn = document.querySelector(".show-modal");
-const closeModalBtn = document.querySelector(".close-modal");
-const confirmModalBtn = document.querySelector(".confirm-modal");
-const modal = document.querySelector(".modal");
+const showModalBtn = document.querySelectorAll(".show-modal");
+const closeModalBtn = document.querySelectorAll(".close-modal");
+
+const modals = document.querySelectorAll(".modal");
 const backDrop = document.querySelector(".backdrop");
-showModalBtn.addEventListener("click", () => {
-    modal.style.opacity = 1;
-    modal.style.transform = "translateY(0)";
-    backDrop.style.display = "block";
+showModalBtn.forEach((btn) =>
+    btn.addEventListener("click", (e) => {
+        takeModal(btn);
+        console.log(modal);
+        modal.style.display = "block";
+        modal.style.transform = "scale(1)";
+        backDrop.style.display = "block";
+    })
+);
+closeModalBtn.forEach((btn) => {
+    btn.addEventListener("click", closingModal);
 });
-closeModalBtn.addEventListener("click", closingModal);
-confirmModalBtn.addEventListener("click", () => {
-    modal.style.opacity = "";
-    modal.style.transform = "";
-    backDrop.style.display = "";
-    alert("Confirmed!");
-});
+
 backDrop.addEventListener("click", closingModal);
 
 function closingModal() {
-    modal.style.opacity = "";
-    modal.style.transform = "";
-    backDrop.style.display = "";
+    modals.forEach((modal) => {
+        modal.style.display = "none";
+        modal.style.transform = "scale(1)";
+        backDrop.style.display = "none";
+    });
+}
+
+function takeModal(btn) {
+    let modalId = btn.getAttribute("data-modal");
+    return (modal = document.querySelector(modalId));
 }
